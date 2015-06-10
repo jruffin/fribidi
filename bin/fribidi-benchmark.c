@@ -58,7 +58,8 @@
 #if HAVE_SYS_TIMES_H+0
 # include <sys/times.h>
 #endif
-#ifdef _WIN32
+#if 0
+//#ifdef _WIN32
 #include <windows.h>
 #endif /* _WIN32 */
 
@@ -126,7 +127,8 @@ utime (
   void
 )
 {
-#ifdef _WIN32
+#if 0
+//#ifdef _WIN32
   FILETIME creationTime, exitTime, kernelTime, userTime;
   HANDLE currentProcess = GetCurrentProcess();
   if (GetProcessTimes(currentProcess, &creationTime, &exitTime, &kernelTime, &userTime))

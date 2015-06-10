@@ -87,19 +87,26 @@ AC_PROG_CC
 AC_PROG_INSTALL
 PKG_PROG_PKG_CONFIG
 AC_MSG_CHECKING([for native Win32])
-  case $build_os in
+  case $host_os in
     mingw*) os_win32=yes ;;
     *) os_win32=no ;;
   esac
 AC_MSG_RESULT([$os_win32])
 AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
 AC_MSG_CHECKING([for some Win32 platform])
-  case $build_os in
+  case $host_os in
     mingw*|cygwin*) platform_win32=yes ;;
     *) platform_win32=no ;;
   esac
 AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
+AC_MSG_CHECKING([for some Windows CE platform])
+  case $host_os in
+      *ce) platform_wince=yes ;;
+      *) platform_wince=no ;;
+  esac
+AC_MSG_RESULT([$platform_wince])
+AM_CONDITIONAL(PLATFORM_WINCE, test "$platform_wince" = "yes")
 
 
 # Checks for header files.
@@ -120,6 +127,10 @@ AC_CHECK_SIZEOF(wchar_t)
 changequote(,)dnl
 if test "x$GCC" = "xyes"; then
   CFLAGS="$CFLAGS -Wall -ansi "
+fi
+# Disable automatic imports with cegcc, which tend to cause weird errors
+if test "x$platform_wince" = "xyes"; then
+  LDFLAGS="-Xlinker --disable-auto-import "
 fi
 changequote([,])dnl
 

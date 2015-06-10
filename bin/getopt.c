@@ -143,8 +143,10 @@ static struct _getopt_data getopt_data;
    whose names are inconsistent.  */
 
 #ifndef getenv
+#  if PLATFORM_WINCE_FALSE
 extern char *getenv (
 );
+#  endif
 #endif
 
 #endif /* not __GNU_LIBRARY__ */
@@ -288,7 +290,11 @@ _getopt_initialize (
 
   d->__nextchar = NULL;
 
+#if PLATFORM_WINCE_FALSE
   d->__posixly_correct = !!getenv ("POSIXLY_CORRECT");
+#else
+  d->__posixly_correct = 0;
+#endif
 
   /* Determine how to handle the ordering of options and nonoptions.  */
 

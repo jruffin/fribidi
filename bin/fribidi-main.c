@@ -232,6 +232,7 @@ main (
   eol_text = NULL;
   input_base_direction = FRIBIDI_PAR_ON;
 
+#if PLATFORM_WINCE_FALSE
   if ((s = (char *) getenv ("COLUMNS")))
     {
       int i;
@@ -240,6 +241,7 @@ main (
       if (i > 0)
 	text_width = i;
     }
+#endif
 
 #define CHARSETDESC 257
 #define CAPRTL 258
